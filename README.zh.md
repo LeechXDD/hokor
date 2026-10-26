@@ -2,13 +2,15 @@
 
 [English](README.md)
 
-一个 Claude Code skill。Agent 撞过的错，能从工具调用判出来的，写成 settings 里的钩子：下次撞上那一刻拦下，告诉它正确做法。判不出来的，再决定记不记、记进 CLAUDE.md、规范还是错题本。
+一个 Claude Code skill。Agent 撞过的错，能从工具调用判出来的，写成 settings 里的 hook：下次撞上那一刻拦下，告诉它正确做法。判不出来的，再决定记不记、记进 CLAUDE.md、规范还是错题本。
 
 ## 为什么
 
-不常撞的错写进 CLAUDE.md，每次会话都占上下文，写多了反而稀释真正常用的规矩。Claude Code 的钩子本来就能在拦下时把理由交给模型（退出码 2，stderr 给模型看），所以这类错写成钩子更划算：平时不占地方，撞上时正好给出正路。
+不常撞的错写进 CLAUDE.md，每次会话都占上下文，写多了反而稀释真正常用的规矩。Claude Code 的 hook 本来就能在拦下时把理由交给模型（退出码 2，stderr 给模型看），所以这类错写成 hook 更划算：平时不占地方，撞上时正好给出正路。
 
-钩子防不到百分之百，换个写法绕过去的不追。被拦下那次给了正路就够。
+在作者的一个项目里，15 条规矩改由 hook 管住，每次会话常驻的规矩文字少了约六分之一。代价是：真犯了错时，那一步会被拦下，多走一轮再照正路做。被拦后如果不给正路，agent 容易反复换写法试错。
+
+hook 防不到百分之百，换个写法绕过去的不追。被拦下那次给了正路就够。
 
 ## 安装
 
@@ -27,12 +29,12 @@ Agent 犯了错，你照平时那样纠正就行，比如「别再犯」「处�
 它会：
 
 1. 判这个错能不能从工具调用本身（命令、参数、路径、要写进文件的内容）判出来。
-2. 能：先找 settings 里有没有管同一类事的现成脚本，有就加个分支，没有才新写，只在本仓会犯的进项目级 settings，到哪都会犯的进用户级；手试一拦一放；把要加进 settings 的那段 JSON 给你看，你确认后再登记；钩子生效后，从 CLAUDE.md、错题本或规范里删掉那条。
+2. 能：先找 settings 里有没有管同一类事的现成脚本，有就加个分支，没有才新写，只在本仓会犯的进项目级 settings，到哪都会犯的进用户级；手试一拦一放；把要加进 settings 的那段 JSON 给你看，你确认后再登记；hook 生效后，从 CLAUDE.md、错题本或规范里删掉那条。
 3. 不能：一次性的不记；每次会话都用得上的进 CLAUDE.md；做某类事才用、撞过几次的进规范；头一回或少见的进错题本，同类问题撞满门槛（默认 3 次）就转进规范。
 
 项目里已有错题本和规范就用现成的。没有的话，第一次要记时它会问你一次，默认建议 `.claude/rules/lessons.md`（第一次转正时再建 `.claude/rules/standards.md`）：`.claude/rules/` 下的文件每次会话自动加载，不用改 CLAUDE.md，`<!-- seen -->` 这类注释也不进上下文。也可以选私用（加进 `.gitignore`，只在当前 worktree 有效），或者不要错题本，全写成 CLAUDE.md 里的一句话。
 
-## 写出来的钩子长什么样
+## 写出来的 hook 长什么样
 
 ```bash
 #!/bin/bash
@@ -47,7 +49,7 @@ fi
 exit 0
 ```
 
-这个例子用 [jq](https://jqlang.org/) 读调用的 JSON（`brew install jq` 或 `apt install jq`）。skill 本身不依赖它，agent 也可以用 Python 等写钩子。
+这个例子用 [jq](https://jqlang.org/) 读调用的 JSON（`brew install jq` 或 `apt install jq`）。skill 本身不依赖它，agent 也可以用 Python 等写 hook。
 
 登记进 `~/.claude/settings.json`：
 
@@ -65,7 +67,7 @@ exit 0
 
 ## 考过什么
 
-见 [tests/skill-exams](tests/skill-exams/README.md)：5 道行为题、一套触发测试，附 2026-10-26 的结果；另有一个对照实验，比较钩子拦下时只说「Blocked.」和给出正路，agent 的下一步有什么不同。
+见 [tests/skill-exams](tests/skill-exams/README.md)：5 道行为题、一套触发测试，附 2026-10-26 的结果；另有一个对照实验，比较 hook 拦下时只说「Blocked.」和给出正路，agent 的下一步有什么不同。
 
 ## 许可
 

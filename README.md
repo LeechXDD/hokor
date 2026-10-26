@@ -8,6 +8,8 @@ A Claude Code skill. When an agent makes a mistake that can be detected from the
 
 Rare mistakes written into CLAUDE.md cost context in every session and dilute the rules you actually need. Claude Code hooks can already hand the reason to the model when they block (exit code 2, stderr goes to the model), so a hook is the cheaper home for these: it costs nothing until the mistake happens, then gives the way forward at exactly that moment.
 
+In one of the author's projects, moving 15 rules into hooks cut the rule text that stays in every session's context by about a sixth. The cost: when the agent does make the mistake, that step is blocked and it takes one more turn to do it the right way. A hook that blocks without giving the right path tends to leave the agent retrying one rewrite after another.
+
 Hooks can't block 100% of variants, and this doesn't chase rewrites that slip past. Giving the right path the time it does block is enough.
 
 ## Install
