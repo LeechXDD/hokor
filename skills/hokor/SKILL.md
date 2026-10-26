@@ -73,7 +73,7 @@ Entry format:
 ```
 **In PRs and reports, claim only verification that actually ran; write "not verified" for the rest.**
 <!-- rule id=claim-only-what-ran seen=1 -->
-- Incident: 10-21 PR #212 said "verified on the real stack" in its summary; only unit tests ran; reviewer caught it, sent back.
+- Incident: 10-21 PR #212 said "verified end-to-end" in its summary; only unit tests ran; reviewer caught it, sent back.
 ```
 
 The title is an imperative; `id` is lowercase with hyphens; `seen` appears only in the lessons file; one line per incident: date, where, what happened, who caught it. If the file already has entries, follow their language and wording. Edit files with Write / Edit.
