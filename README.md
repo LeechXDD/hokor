@@ -14,6 +14,16 @@ Hooks can't block 100% of variants, and this doesn't chase rewrites that slip pa
 
 ## Install
 
+With the [skills CLI](https://github.com/vercel-labs/skills) (needs Node):
+
+```
+npx skills add LeechXDD/hokor -g -a claude-code
+```
+
+`-g` installs to `~/.claude/skills/` for all projects; drop it to install into the current project's `.claude/skills/`. Update later with `npx skills update`.
+
+Or by hand:
+
 ```
 git clone https://github.com/LeechXDD/hokor.git
 mkdir -p ~/.claude/skills

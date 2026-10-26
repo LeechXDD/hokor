@@ -14,6 +14,16 @@ hook 防不到百分之百，换个写法绕过去的不追。被拦下那次给
 
 ## 安装
 
+用 [skills CLI](https://github.com/vercel-labs/skills)（要装 Node）：
+
+```
+npx skills add LeechXDD/hokor -g -a claude-code
+```
+
+`-g` 装进 `~/.claude/skills/`，所有项目都能用；去掉 `-g` 就只装进当前项目的 `.claude/skills/`。以后用 `npx skills update` 更新。
+
+或者手动装：
+
 ```
 git clone https://github.com/LeechXDD/hokor.git
 mkdir -p ~/.claude/skills
