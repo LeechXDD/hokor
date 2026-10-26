@@ -2,7 +2,7 @@
 
 [中文](README.zh.md)
 
-A Claude Code skill. When an agent makes a mistake that can be detected from the tool call, it turns the mistake into a hook in your settings: the next time the agent makes it, the hook blocks the call and tells the agent the right way. Mistakes a hook can't detect are triaged instead: not recorded, or recorded in CLAUDE.md, a standards file or a lessons file. The name is hook + record.
+A Claude Code skill. When an agent makes a mistake that can be detected from the tool call, it turns the mistake into a hook in your settings: the next time the agent makes it, the hook blocks the call and tells the agent the right way. Mistakes a hook can't detect are triaged instead: not recorded, or recorded in CLAUDE.md, a standards file or a lessons file.
 
 ## Why
 

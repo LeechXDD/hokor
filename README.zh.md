@@ -2,7 +2,7 @@
 
 [English](README.md)
 
-一个 Claude Code skill。Agent 撞过的错，能从工具调用判出来的，写成 settings 里的钩子：下次撞上那一刻拦下，告诉它正确做法。判不出来的，再决定记不记、记进 CLAUDE.md、规范还是错题本。名字取 hook + record。
+一个 Claude Code skill。Agent 撞过的错，能从工具调用判出来的，写成 settings 里的钩子：下次撞上那一刻拦下，告诉它正确做法。判不出来的，再决定记不记、记进 CLAUDE.md、规范还是错题本。
 
 ## 为什么
 
