@@ -49,6 +49,8 @@ fi
 exit 0
 ```
 
+这个例子用 [jq](https://jqlang.org/) 读调用的 JSON（`brew install jq` 或 `apt install jq`）。skill 本身不依赖它，agent 也可以用 Python 等写钩子。
+
 登记进 `~/.claude/settings.json`：
 
 ```json

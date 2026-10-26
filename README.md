@@ -47,6 +47,8 @@ fi
 exit 0
 ```
 
+This example reads the call's JSON with [jq](https://jqlang.org/) (`brew install jq` or `apt install jq`). The skill doesn't require it; the agent can write hooks in Python or anything else.
+
 Registered in `~/.claude/settings.json`:
 
 ```json
