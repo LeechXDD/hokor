@@ -2,8 +2,6 @@
 
 [English](README.md)
 
-skill 正文是英文写的；你跟 agent 说中文照样用。
-
 一个 Claude Code skill。Agent 撞过的错，能从工具调用判出来的，写成 settings 里的钩子：下次撞上那一刻拦下，告诉它正确做法。判不出来的，再决定记不记、记进 CLAUDE.md、规范还是错题本。名字取 hook + record。
 
 ## 为什么
