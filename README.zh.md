@@ -36,6 +36,8 @@ cp -r hokor/skills/hokor ~/.claude/skills/
 
 Agent 犯了错，你照平时那样纠正就行，比如「别再犯」「处理掉」「记下来」「写成钩子」，它会自己调用这个 skill。也可以直接输入 `/hokor`。
 
+想从已有的规矩开始，输入 `/hokor 把 CLAUDE.md 里的规矩 hook 化`。它先列一张清单：哪些规矩能写成 hook、各拦什么、放进哪里，等你批了再动手；写不成 hook 的原样留着。
+
 它会：
 
 1. 判这个错能不能从工具调用本身（命令、参数、路径、要写进文件的内容）判出来。
@@ -77,7 +79,7 @@ exit 0
 
 ## 考过什么
 
-见 [tests/skill-exams](tests/skill-exams/README.md)：5 道行为题、一套触发测试，附 2026-10-26 的结果；另有一个对照实验，比较 hook 拦下时只说「Blocked.」和给出正路，agent 的下一步有什么不同。
+见 [tests/skill-exams](tests/skill-exams/README.md)：6 道行为题、一套触发测试，附 2026-10-26 的结果；另有一个对照实验，比较 hook 拦下时只说「Blocked.」和给出正路，agent 的下一步有什么不同。
 
 ## 许可
 

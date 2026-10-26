@@ -36,6 +36,8 @@ To follow updates, use `ln -s "$PWD/hokor/skills/hokor" ~/.claude/skills/hokor` 
 
 Correct the agent the way you normally would ("don't do that again", "deal with it", "remember this", "make it a hook") and it invokes the skill itself. You can also type `/hokor`.
 
+To start from rules you already have, type `/hokor hook the rules in CLAUDE.md`. It lists which rules a hook can catch, what each would block and where it would go, and waits for your approval before writing anything; rules a hook can't catch stay where they are.
+
 It will:
 
 1. Decide whether the mistake shows in the tool call itself: the command, arguments, paths, or the content about to be written.
@@ -77,7 +79,7 @@ The reason must go to stderr (with exit code 2) or `permissionDecisionReason` fo
 
 ## Tested
 
-See [tests/skill-exams](tests/skill-exams/README.md): 5 behavior exams and a trigger test, with results from 2026-10-26, plus a controlled experiment comparing what the agent does next when a hook only says "Blocked." versus when it gives the right path. The exams and their write-up are in Chinese.
+See [tests/skill-exams](tests/skill-exams/README.md): 6 behavior exams and a trigger test, with results from 2026-10-26, plus a controlled experiment comparing what the agent does next when a hook only says "Blocked." versus when it gives the right path. The exams and their write-up are in Chinese.
 
 ## License
 

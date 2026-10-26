@@ -1,6 +1,6 @@
 ---
 name: hokor
-description: Use when an agent mistake was just corrected or flagged in review and the user wants it handled ("don't do that again", "deal with it", "remember this", "make it a hook", "别再犯", "处理掉", "记下来", "写成钩子"); also when an entry in CLAUDE.md, a lessons file (错题本) or a standards file (规范) might now be catchable by a hook.
+description: Use when an agent mistake was just corrected or flagged in review and the user wants it handled ("don't do that again", "deal with it", "remember this", "make it a hook", "别再犯", "处理掉", "记下来", "写成钩子"); also when the user asks to turn rules already in CLAUDE.md, a lessons file (错题本) or a standards file (规范) into hooks, or an entry there might now be catchable by a hook.
 ---
 
 # Mistakes already made: hook them if you can, record them only if you can't
@@ -77,6 +77,18 @@ Entry format:
 ```
 
 The title is an imperative; `id` is lowercase with hyphens; `seen` appears only in the lessons file; one line per incident: date, where, what happened, who caught it. If the file already has entries, follow their language and wording. Edit files with Write / Edit.
+
+## Going through existing rules
+
+When the user asks to hook rules already written down (CLAUDE.md, CLAUDE.local.md, `.claude/rules/`, the lessons or standards file) rather than a mistake just made:
+
+1. Run step 1 on every rule in the files they named, or in all of those files if they named none.
+2. Before writing or changing anything, show one list and wait for the user to approve it or strike items. This includes adding a branch to an existing script: a user-level script reaches every repo.
+   - Each hookable rule: what it blocks, what it lets through, which existing script gets a branch or that it needs a new one, and the level. A rule written in a project file goes in project settings unless the user says it applies everywhere.
+   - Each rule that can't be hooked: one line on why.
+3. Block what the rule's own words name. Anything broader (related commands, other tools that reach the same files) goes in the list as a question.
+4. After approval, do step 2 for the approved items, and show the settings JSON for all of them in one block so one confirmation registers them.
+5. Rules that can't be hooked stay exactly where and how they are: don't move, reword or count them. Step 3 is for mistakes just made.
 
 ## Report to the user
 
