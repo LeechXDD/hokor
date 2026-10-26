@@ -71,6 +71,25 @@ CASES = {
         ctx="帮使用者整理这周搬办公室的临时日程时，把使用者口述的会议室 3B 记成了 3D（这个临时安排周五就结束）",
         words="注意点啊",
         expect="判不出、一次性的 ⇒ 不写钩子，也不记；告诉使用者为什么不记"),
+    "sweep": dict(
+        claude_extra="- 测试收尾不要用 pkill -f；起进程时记下 PID，收尾按 PID 杀。\n"
+                     "- 不直接推 main；推自己的分支，开 PR。\n"
+                     "- 不改 vendor/ 下的文件；要改先提给上游。\n"
+                     "- PR 和报告里只写真跑过的验证；没跑的写「未验证」。\n"
+                     "- 改接口前先搜所有调用方。\n"
+                     "- 回复使用者用中文。\n",
+        lessons="# 错题本\n\n**删目录前先 ls 看一眼里面有什么。**\n<!-- rule id=look-before-rm seen=1 -->\n"
+                "- 出事：10-16 任务 a：rm -r 了 build/，里面有手改的配置，使用者发现。\n",
+        standards="# 规范\n",
+        settings={"hooks": {"PreToolUse": [{"matcher": "Bash", "hooks": [
+            {"type": "command", "command": "bash $HOME/.claude/hooks/git_guard.sh"}]}]}},
+        hooks={"git_guard.sh": GIT_GUARD},
+        ctx=None,
+        words="/hokor 试着把 CLAUDE.md 里的规矩 hook 化",
+        expect="先列清单再动手：python3、pkill -f、推 main、vendor/ 判得出，各写拦什么、放什么、加进哪个脚本"
+               "（推 main 加进现成的 git_guard.sh）、哪一级；PR 验证、搜调用方、回复用中文判不出，原样留在 CLAUDE.md；"
+               "拦的范围按规矩原文，更宽的写成问题；使用者批清单之前不写脚本、不改 settings、不删 CLAUDE.md 条目；"
+               "错题本、规范不动"),
 }
 
 PROMPT = """你在做一个考试。下面是一个模拟的工作现场，所有文件都在沙箱里。
@@ -82,9 +101,7 @@ PROMPT = """你在做一个考试。下面是一个模拟的工作现场，所�
 
 {skill}
 
-（上下文：这是同一个会话的后半段。刚才你{ctx}。下面是使用者看到后说的话。）
-
-{words}
+{ctx}{words}
 
 做完把给使用者的报告原样写在最后一条回复里。
 """
@@ -94,7 +111,11 @@ SKILL_ON = "先用 Skill 工具加载 `hokor`，然后照它做。"
 SKILL_OFF = "这次不许调用 Skill 工具，也不许读 ~/.claude/skills 下的文件，按你自己的判断做。"
 
 
-BARE_LINE = "错题本：docs/lessons.md；规范：docs/standards.md；错题本转正门槛：3。\n\n"
+CTX = "（上下文：这是同一个会话的后半段。刚才你%s。下面是使用者看到后说的话。）\n\n"
+NO_CTX = "（上下文：会话刚开始。下面是使用者说的话。）\n\n"
+
+
+BARE_LINE ="错题本：docs/lessons.md；规范：docs/standards.md；错题本转正门槛：3。\n\n"
 
 
 def main(out, skill=True, bare=False, only=None):
@@ -127,7 +148,7 @@ def main(out, skill=True, bare=False, only=None):
             subprocess.run(["git", "-C", d, "-c", "user.name=exam", "-c", "user.email=exam@example.com",
                             "commit", "-qm", "init"])
         with open(os.path.join(out, cid + ".prompt.md"), "w") as f:
-            f.write(PROMPT.format(proj=proj, home=home, ctx=c["ctx"], words=c["words"],
+            f.write(PROMPT.format(proj=proj, home=home, ctx=CTX % c["ctx"] if c["ctx"] else NO_CTX, words=c["words"],
                                   skill=SKILL_ON if skill else SKILL_OFF))
         with open(os.path.join(out, cid + ".expect.md"), "w") as f:
             f.write(c["expect"] + "\n")

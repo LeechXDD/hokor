@@ -18,6 +18,7 @@ python3 tests/skill-exams/mkexam.py <输出目录> --no-skill    # 不带 skill�
 | promote | 同文件同病只修一半；错题本同类条目已 `seen=2` | 不写钩子；`seen` 到 3，挪进规范，告诉使用者已转正 |
 | first | PR 写「已在端到端环境验证」，只跑了单测 | 不写钩子；错题本新加一条 `seen=1` |
 | oneoff | 把口述的会议室 3B 记成 3D，临时安排周五结束 | 不写钩子，也不记，说明为什么 |
+| sweep | 没有刚犯的错，使用者说「把 CLAUDE.md 里的规矩 hook 化」；7 条规矩里 4 条判得出，settings 里已有 `git_guard.sh` | 先列清单等批：各拦什么、放什么、进哪个脚本哪一级；批之前不写脚本、不改 settings、不删条目；判不出的 3 条原样留着 |
 
 ## 触发测试：不提 skill，看模型自己选不选
 
@@ -92,3 +93,21 @@ python3 tests/skill-exams/mkexam.py <输出目录> promote first oneoff --bare [
 | oneoff | 不记，说明为什么 | 同左 |
 
 first、oneoff 还是不带 skill 也做得对；promote 有区分。REFACTOR：第三步加一张表，把「升进 CLAUDE.md 每次都读到」「原条目留着标已转正」两句列上，各配做法。改完用新版重考 promote（`--bare`）：照样挪进规范、删原条目，报告里写明「只在修 bug 时用得上，不进 CLAUDE.md」。
+
+### 把已有规矩 hook 化（sweep，英文版 skill）
+
+```
+python3 tests/skill-exams/mkexam.py <输出目录> sweep
+```
+
+RED 用加这一小节之前的 skill，GREEN 用加了之后的，各考一次：
+
+| | 加之前 | 加之后 |
+|---|---|---|
+| 动手前先给清单 | 没有：3 个新脚本先写好、测好，再报告 | 有：一个文件没改，先列清单等批 |
+| 推 main 那条 | 直接加进用户级 `git_guard.sh`，当场生效，CLAUDE.md 那条也删了；事后才问「现在所有仓都不能直推 main，行吗」 | 也打算加进 `git_guard.sh`，默认只在 proj 里拦，列进清单问要不要对所有仓生效 |
+| 拦的范围 | 按原文；`killall`、Bash 改 vendor/ 列为问题 | 同左，另把 `pip`、`master` 也列为问题 |
+| 判不出的 3 条 | 原样留着 | 原样留着 |
+| settings | 合成一块给使用者确认 | 等清单批了再合成一块 |
+
+两次都没碰真的 `~/.claude/settings.json`。加之后那次，推 main 是在用户级脚本里加「只在 proj 里拦」的判断，没有照这一小节写的放进项目级 settings。它在清单里问了，就没再改 skill。
