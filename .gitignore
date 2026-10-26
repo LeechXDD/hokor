@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.rule-check/
+CLAUDE.local.md
